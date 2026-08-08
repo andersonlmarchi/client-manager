@@ -1,0 +1,33 @@
+# Platform Core
+
+Base open-source para SaaS: identidade, organizações, produtos, licenciamento, billing, auditoria, integrações e configuração.
+
+Arquitetura em microsserviços Go, PostgreSQL, portal React (Vite) atrás de nginx, orquestrados com Docker Compose.
+
+## Estrutura
+
+Hoje no repositório:
+
+```text
+packages/       # shared, events
+docs/adr/       # decisões de arquitetura
+```
+
+Pastas como `services/`, `web/`, `sdk/` e `docker/` entram quando a etapa correspondente criar código real (sem diretórios vazios).
+
+## Desenvolvimento
+
+- Go 1.22+ (workspace via `go.work`)
+- Docker Compose sobe a stack localmente (neste ambiente use `sudo` se necessário)
+- Commits e PRs são feitos manualmente ao fechar cada etapa
+
+```bash
+export PATH=/usr/local/go/bin:$PATH
+go test ./packages/shared/... ./packages/events/...
+```
+
+Conforme novos módulos entrarem no `go.work`, inclua os caminhos correspondentes no comando de teste.
+
+## Documentação de integração
+
+Guia para plugar outro SaaS: [`docs/integration/`](docs/integration/) (preenchido nas etapas de docs).
