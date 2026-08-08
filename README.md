@@ -1,6 +1,6 @@
-# Platform Core
+# Client Manager
 
-Base open-source para SaaS: identidade, organizações, produtos, licenciamento, billing, auditoria, integrações e configuração.
+Identidade, organizações, produtos, licenciamento, billing com medição de uso, auditoria e integrações.
 
 Arquitetura em microsserviços Go, PostgreSQL, portal React (Vite) atrás de nginx, orquestrados com Docker Compose.
 
@@ -30,4 +30,4 @@ Conforme novos módulos entrarem no `go.work`, inclua os caminhos correspondente
 
 ## Documentação de integração
 
-Guia para plugar outro SaaS: [`docs/integration/`](docs/integration/) (preenchido nas etapas de docs).
+Guia para integrar outros sistemas: [`docs/integration/`](docs/integration/) (preenchido nas etapas de docs).

@@ -1,3 +1,3 @@
-module github.com/t-code/platform-core/packages/shared
+module github.com/t-code/client-manager/packages/shared
 
 go 1.22

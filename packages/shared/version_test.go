@@ -3,7 +3,7 @@ package shared_test
 import (
 	"testing"
 
-	"github.com/t-code/platform-core/packages/shared"
+	"github.com/t-code/client-manager/packages/shared"
 )
 
 func TestModuleName(t *testing.T) {

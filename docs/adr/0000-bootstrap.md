@@ -6,12 +6,13 @@ Aceito
 
 ## Contexto
 
-Platform Core começa greenfield, em etapas miúdas, com microsserviços Go e packages compartilhados.
+Client Manager começa greenfield, em etapas miúdas, com microsserviços Go e packages compartilhados.
 
 ## Decisão
 
+- Nome do software: **Client Manager** (slug `client-manager`).
 - Monorepo com `go.work` apontando para `packages/*` (serviços entram nas etapas seguintes).
-- Module path base: `github.com/t-code/platform-core/...`
+- Module path base: `github.com/t-code/client-manager/...`
 - Licença: MIT (`LICENSE`).
 
 ## Consequências
