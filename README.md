@@ -10,10 +10,11 @@ Hoje no repositório:
 
 ```text
 packages/       # shared, events
+docker/         # Compose + Postgres
 docs/adr/       # decisões de arquitetura
 ```
 
-Pastas como `services/`, `web/`, `sdk/` e `docker/` entram quando a etapa correspondente criar código real (sem diretórios vazios).
+Pastas como `services/`, `web/` e `sdk/` entram quando a etapa correspondente criar código real (sem diretórios vazios).
 
 ## Desenvolvimento
 
@@ -23,10 +24,21 @@ Pastas como `services/`, `web/`, `sdk/` e `docker/` entram quando a etapa corres
 
 ```bash
 export PATH=/usr/local/go/bin:$PATH
-go test ./packages/shared/... ./packages/events/...
+go test ./packages/shared/... ./packages/events/... ./docker/...
 ```
 
 Conforme novos módulos entrarem no `go.work`, inclua os caminhos correspondentes no comando de teste.
+
+## Postgres (Docker)
+
+Instruções completas: [`docker/README.md`](docker/README.md).
+
+```bash
+cp .env.example .env
+# defina POSTGRES_PASSWORD
+
+sudo docker compose -f docker/docker-compose.yml --env-file .env up -d
+```
 
 ## Documentação de integração
 
