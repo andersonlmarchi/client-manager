@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/t-code/client-manager/packages/shared"
+	"github.com/andersonlmarchi/client-manager/packages/shared"
 )
 
 func TestNewUUIDAndParseUUID(t *testing.T) {

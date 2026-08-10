@@ -3,7 +3,7 @@ package events_test
 import (
 	"testing"
 
-	"github.com/t-code/client-manager/packages/events"
+	"github.com/andersonlmarchi/client-manager/packages/events"
 )
 
 func TestModuleName(t *testing.T) {

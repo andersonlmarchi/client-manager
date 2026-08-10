@@ -18,16 +18,14 @@ Pastas como `services/`, `web/` e `sdk/` entram quando a etapa correspondente cr
 
 ## Desenvolvimento
 
-- Go 1.22+ (workspace via `go.work`)
+- Go 1.22+ (um módulo na raiz: `github.com/andersonlmarchi/client-manager`)
 - Docker Compose sobe a stack localmente (neste ambiente use `sudo` se necessário)
 - Commits e PRs são feitos manualmente ao fechar cada etapa
 
 ```bash
 export PATH=/usr/local/go/bin:$PATH
-go test ./packages/shared/... ./packages/events/... ./docker/...
+go test ./...
 ```
-
-Conforme novos módulos entrarem no `go.work`, inclua os caminhos correspondentes no comando de teste.
 
 ## Postgres (Docker)
 

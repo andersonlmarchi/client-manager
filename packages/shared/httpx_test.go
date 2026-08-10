@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/t-code/client-manager/packages/shared"
+	"github.com/andersonlmarchi/client-manager/packages/shared"
 )
 
 func TestWriteProblem(t *testing.T) {

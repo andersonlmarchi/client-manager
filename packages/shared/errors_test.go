@@ -4,7 +4,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/t-code/client-manager/packages/shared"
+	"github.com/andersonlmarchi/client-manager/packages/shared"
 )
 
 func TestNewErrorAndAsError(t *testing.T) {

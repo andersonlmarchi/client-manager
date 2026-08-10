@@ -6,15 +6,15 @@ Aceito
 
 ## Contexto
 
-Client Manager começa greenfield, em etapas miúdas, com microsserviços Go e packages compartilhados.
+Client Manager começa greenfield, em etapas miúdas, com microsserviços Go e packages compartilhados no mesmo repositório.
 
 ## Decisão
 
 - Nome do software: **Client Manager** (slug `client-manager`).
-- Monorepo com `go.work` apontando para `packages/*` (serviços entram nas etapas seguintes).
-- Module path base: `github.com/t-code/client-manager/...`
+- Um único módulo Go na raiz: `github.com/andersonlmarchi/client-manager` (remoto https://github.com/andersonlmarchi/client-manager).
+- Monorepo permanente: packages e services são pastas do mesmo módulo, sem multi-module/`go.work`.
 - Licença: MIT (`LICENSE`).
 
 ## Consequências
 
-Serviços e `sdk/` serão adicionados ao `go.work` quando ganharem `go.mod` próprio.
+Novos serviços entram como `services/<nome>/...` no mesmo `go.mod`. Imports usam o path do módulo raiz.

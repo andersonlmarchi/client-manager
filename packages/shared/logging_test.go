@@ -4,7 +4,7 @@ import (
 	"log/slog"
 	"testing"
 
-	"github.com/t-code/client-manager/packages/shared"
+	"github.com/andersonlmarchi/client-manager/packages/shared"
 )
 
 func TestParseLogLevel(t *testing.T) {
