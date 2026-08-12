@@ -10,11 +10,12 @@ Hoje no repositório:
 
 ```text
 packages/       # shared, events
+services/       # configuration
 docker/         # Compose + Postgres
 docs/adr/       # decisões de arquitetura
 ```
 
-Pastas como `services/`, `web/` e `sdk/` entram quando a etapa correspondente criar código real (sem diretórios vazios).
+Pastas como `web/` e `sdk/` entram quando a etapa correspondente criar código real (sem diretórios vazios).
 
 ## Desenvolvimento
 

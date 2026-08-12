@@ -87,6 +87,48 @@ func TestServiceEntrypointAutomatesMigrations(t *testing.T) {
 	}
 }
 
+func TestComposeDefinesConfigurationService(t *testing.T) {
+	t.Parallel()
+	content := readDockerFile(t, "docker-compose.yml")
+
+	required := []string{
+		"configuration:",
+		"services/configuration/Dockerfile",
+		"SKIP_MIGRATE:",
+		"DATABASE_URL:",
+		"HTTP_ADDR:",
+		"condition: service_healthy",
+	}
+	for _, want := range required {
+		if !strings.Contains(content, want) {
+			t.Errorf("docker-compose.yml missing %q", want)
+		}
+	}
+}
+
+func TestConfigurationDockerfileExists(t *testing.T) {
+	t.Parallel()
+	path := filepath.Join("..", "services", "configuration", "Dockerfile")
+	if _, err := os.Stat(path); err != nil {
+		t.Fatalf("configuration Dockerfile: %v", err)
+	}
+	data, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	content := string(data)
+	for _, want := range []string{
+		"FROM golang:1.22-alpine AS build",
+		"service-entrypoint.sh",
+		"USER appuser",
+		"/app/configuration",
+	} {
+		if !strings.Contains(content, want) {
+			t.Errorf("Dockerfile missing %q", want)
+		}
+	}
+}
+
 func TestEnvExampleHasNoRealSecretAndDocumentsCopy(t *testing.T) {
 	t.Parallel()
 	root := filepath.Join("..", ".env.example")

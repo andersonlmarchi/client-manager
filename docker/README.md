@@ -5,9 +5,7 @@
 - Docker Engine + Compose plugin
 - Neste host, Docker costuma exigir `sudo`
 
-## Subir só o Postgres
-
-O banco sobe **vazio** (database/usuário via `POSTGRES_*`). Não há SQL de bootstrap criando schemas de domínio.
+## Subir stack
 
 Na raiz do repositório:
 
@@ -15,8 +13,10 @@ Na raiz do repositório:
 cp .env.example .env
 # edite POSTGRES_PASSWORD com um segredo forte
 
-sudo docker compose -f docker/docker-compose.yml --env-file .env up -d
+sudo docker compose -f docker/docker-compose.yml --env-file .env up -d --build
 ```
+
+Serviços atuais: `postgres`, `configuration` (`GET http://localhost:8081/health`).
 
 Healthcheck:
 
@@ -42,28 +42,8 @@ sudo docker compose -f docker/docker-compose.yml --env-file .env down -v
 sudo docker compose -f docker/docker-compose.yml --env-file .env config
 ```
 
-## Migrações (sob demanda, automáticas no container)
+## Migrações
 
-- Schemas/tabelas são criados **só quando o serviço precisar**, via migrações versionadas daquele serviço (fluxo ent/Atlas).
-- Não criar a infra de todos os domínios no início.
-- Cada serviço Go usa o entrypoint [`bin/service-entrypoint.sh`](bin/service-entrypoint.sh):
-  1. espera o Postgres (`WAIT_HOST`/`WAIT_PORT`)
-  2. roda `MIGRATE_CMD` (default: `/app/migrate up`) com `DATABASE_URL`
-  3. inicia o binário do serviço (`exec`)
-
-Exemplo futuro no Compose (quando o serviço existir):
-
-```yaml
-configuration:
-  depends_on:
-    postgres:
-      condition: service_healthy
-  environment:
-    DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?sslmode=disable
-  entrypoint: ["/entrypoint.sh"]
-  command: ["/app/configuration"]
-```
-
-No Dockerfile do serviço: copiar `docker/bin/service-entrypoint.sh` como `/entrypoint.sh` e publicar um binário `/app/migrate` (ou ajustar `MIGRATE_CMD`).
-
-`SKIP_MIGRATE=true` pula o passo 2 (útil em jobs pontuais).
+- Schemas/tabelas por serviço, sob demanda (ent/Atlas).
+- Entrypoint: [`bin/service-entrypoint.sh`](bin/service-entrypoint.sh).
+- `configuration` usa `SKIP_MIGRATE=true` até a etapa de migrate do serviço.
