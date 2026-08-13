@@ -94,10 +94,10 @@ func TestComposeDefinesConfigurationService(t *testing.T) {
 	required := []string{
 		"configuration:",
 		"services/configuration/Dockerfile",
-		"SKIP_MIGRATE:",
 		"DATABASE_URL:",
 		"HTTP_ADDR:",
 		"condition: service_healthy",
+		"search_path=configuration",
 	}
 	for _, want := range required {
 		if !strings.Contains(content, want) {
@@ -118,10 +118,11 @@ func TestConfigurationDockerfileExists(t *testing.T) {
 	}
 	content := string(data)
 	for _, want := range []string{
-		"FROM golang:1.22-alpine AS build",
+		"FROM golang:1.25-alpine AS build",
 		"service-entrypoint.sh",
 		"USER appuser",
 		"/app/configuration",
+		"/app/migrate",
 	} {
 		if !strings.Contains(content, want) {
 			t.Errorf("Dockerfile missing %q", want)

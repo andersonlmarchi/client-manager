@@ -19,7 +19,7 @@ Pastas como `web/` e `sdk/` entram quando a etapa correspondente criar código r
 
 ## Desenvolvimento
 
-- Go 1.22+ (um módulo na raiz: `github.com/andersonlmarchi/client-manager`)
+- Go 1.25+ (um módulo na raiz: `github.com/andersonlmarchi/client-manager`)
 - Docker Compose sobe a stack localmente (neste ambiente use `sudo` se necessário)
 - Commits e PRs são feitos manualmente ao fechar cada etapa
 
@@ -28,15 +28,24 @@ export PATH=/usr/local/go/bin:$PATH
 go test ./...
 ```
 
-## Postgres (Docker)
+## Docker Compose
 
-Instruções completas: [`docker/README.md`](docker/README.md).
+Instruções detalhadas: [`docker/README.md`](docker/README.md).
 
 ```bash
 cp .env.example .env
 # defina POSTGRES_PASSWORD
 
-sudo docker compose -f docker/docker-compose.yml --env-file .env up -d
+sudo docker compose -f docker/docker-compose.yml --env-file .env up -d --build
+sudo docker compose -f docker/docker-compose.yml --env-file .env down
+```
+
+Health do configuration: `http://localhost:8081/health`
+
+Apagar volumes (apaga dados do Postgres):
+
+```bash
+sudo docker compose -f docker/docker-compose.yml --env-file .env down -v
 ```
 
 ## Documentação de integração
