@@ -9,10 +9,6 @@ type healthResponse struct {
 	Status string `json:"status"`
 }
 
-func RegisterRoutes(mux *http.ServeMux) {
-	mux.HandleFunc("GET /health", HandleHealth)
-}
-
 func HandleHealth(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)

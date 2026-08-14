@@ -98,6 +98,7 @@ func TestComposeDefinesConfigurationService(t *testing.T) {
 		"HTTP_ADDR:",
 		"condition: service_healthy",
 		"search_path=configuration",
+		"ADMIN_API_KEY:",
 	}
 	for _, want := range required {
 		if !strings.Contains(content, want) {

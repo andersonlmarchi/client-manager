@@ -19,6 +19,8 @@ sudo docker compose -f docker/docker-compose.yml --env-file .env down
 
 Serviços atuais: `postgres`, `configuration` (`GET http://localhost:8081/health`).
 
+Defina `ADMIN_API_KEY` no `.env` (obrigatório). Escrita: `PUT /v1/password-policy` com `X-Admin-Key`.
+
 Status:
 
 ```bash

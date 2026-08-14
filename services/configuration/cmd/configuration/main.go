@@ -10,6 +10,8 @@ import (
 	"time"
 
 	"github.com/andersonlmarchi/client-manager/packages/shared"
+	"github.com/andersonlmarchi/client-manager/services/configuration/internal/application"
+	"github.com/andersonlmarchi/client-manager/services/configuration/internal/infrastructure"
 	confighttp "github.com/andersonlmarchi/client-manager/services/configuration/internal/transport/http"
 )
 
@@ -19,9 +21,27 @@ func main() {
 	if addr == "" {
 		addr = ":8080"
 	}
+	adminKey := os.Getenv("ADMIN_API_KEY")
+	if adminKey == "" {
+		logger.Error("ADMIN_API_KEY is required")
+		os.Exit(1)
+	}
+
+	databaseURL := os.Getenv("DATABASE_URL")
+	client, db, err := infrastructure.Open(databaseURL)
+	if err != nil {
+		logger.Error("database open failed", slog.String("error", err.Error()))
+		os.Exit(1)
+	}
+	defer client.Close()
+	defer db.Close()
+
+	repo := infrastructure.NewSettingsRepository(client)
+	service := application.NewSettingsService(repo)
+	serverAPI := confighttp.NewServer(service, adminKey)
 
 	mux := http.NewServeMux()
-	confighttp.RegisterRoutes(mux)
+	serverAPI.RegisterRoutes(mux)
 
 	server := &http.Server{
 		Addr:              addr,

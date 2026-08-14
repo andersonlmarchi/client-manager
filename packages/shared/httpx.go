@@ -47,6 +47,8 @@ func WriteErrorProblem(w http.ResponseWriter, r *http.Request, err error) error 
 			status = http.StatusNotFound
 		case CodeConflict:
 			status = http.StatusConflict
+		case CodeUnauthorized:
+			status = http.StatusUnauthorized
 		case CodeForbidden:
 			status = http.StatusForbidden
 		default:

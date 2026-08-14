@@ -44,6 +44,7 @@ func TestWriteErrorProblemMapsCodes(t *testing.T) {
 		{shared.NewError(shared.CodeInvalid, "bad"), http.StatusBadRequest},
 		{shared.NewError(shared.CodeNotFound, "gone"), http.StatusNotFound},
 		{shared.NewError(shared.CodeConflict, "dup"), http.StatusConflict},
+		{shared.NewError(shared.CodeUnauthorized, "auth"), http.StatusUnauthorized},
 		{shared.NewError(shared.CodeForbidden, "no"), http.StatusForbidden},
 		{shared.NewError(shared.CodeInternal, "boom"), http.StatusInternalServerError},
 	}

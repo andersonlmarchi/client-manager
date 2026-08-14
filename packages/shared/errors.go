@@ -9,11 +9,12 @@ import (
 type Code string
 
 const (
-	CodeInvalid   Code = "invalid"
-	CodeNotFound  Code = "not_found"
-	CodeConflict  Code = "conflict"
-	CodeForbidden Code = "forbidden"
-	CodeInternal  Code = "internal"
+	CodeInvalid      Code = "invalid"
+	CodeNotFound     Code = "not_found"
+	CodeConflict     Code = "conflict"
+	CodeUnauthorized Code = "unauthorized"
+	CodeForbidden    Code = "forbidden"
+	CodeInternal     Code = "internal"
 )
 
 // Error is a domain/application error with a stable code.

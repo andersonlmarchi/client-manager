@@ -42,6 +42,10 @@ sudo docker compose -f docker/docker-compose.yml --env-file .env down
 
 Health do configuration: `http://localhost:8081/health`
 
+API (leitura): `GET http://localhost:8081/v1/password-policy` (também `oidc-settings`, `rate-limits`, `branding`).
+
+Escrita admin: `PUT` nos mesmos paths com header `X-Admin-Key` (valor de `ADMIN_API_KEY`).
+
 Apagar volumes (apaga dados do Postgres):
 
 ```bash
