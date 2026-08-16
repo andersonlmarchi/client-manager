@@ -17,9 +17,9 @@ sudo docker compose -f docker/docker-compose.yml --env-file .env up -d --build
 sudo docker compose -f docker/docker-compose.yml --env-file .env down
 ```
 
-Serviços atuais: `postgres`, `configuration` (`GET http://localhost:8081/health`).
+Serviços atuais: `postgres`, `configuration` (`:8081`), `identity` (`:8082`).
 
-Defina `ADMIN_API_KEY` no `.env` (obrigatório). Escrita: `PUT /v1/password-policy` com `X-Admin-Key`.
+Defina `ADMIN_API_KEY` no `.env` (obrigatório para configuration). Escrita: `PUT /v1/password-policy` com `X-Admin-Key`.
 
 Status:
 

@@ -131,6 +131,47 @@ func TestConfigurationDockerfileExists(t *testing.T) {
 	}
 }
 
+func TestComposeDefinesIdentityService(t *testing.T) {
+	t.Parallel()
+	content := readDockerFile(t, "docker-compose.yml")
+
+	required := []string{
+		"identity:",
+		"services/identity/Dockerfile",
+		"search_path=identity",
+		"SKIP_MIGRATE:",
+		"IDENTITY_PORT",
+	}
+	for _, want := range required {
+		if !strings.Contains(content, want) {
+			t.Errorf("docker-compose.yml missing %q", want)
+		}
+	}
+}
+
+func TestIdentityDockerfileExists(t *testing.T) {
+	t.Parallel()
+	path := filepath.Join("..", "services", "identity", "Dockerfile")
+	if _, err := os.Stat(path); err != nil {
+		t.Fatalf("identity Dockerfile: %v", err)
+	}
+	data, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	content := string(data)
+	for _, want := range []string{
+		"FROM golang:1.25-alpine AS build",
+		"service-entrypoint.sh",
+		"USER appuser",
+		"/app/identity",
+	} {
+		if !strings.Contains(content, want) {
+			t.Errorf("Dockerfile missing %q", want)
+		}
+	}
+}
+
 func TestEnvExampleHasNoRealSecretAndDocumentsCopy(t *testing.T) {
 	t.Parallel()
 	root := filepath.Join("..", ".env.example")

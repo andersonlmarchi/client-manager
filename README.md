@@ -10,7 +10,7 @@ Hoje no repositório:
 
 ```text
 packages/       # shared, events
-services/       # configuration
+services/       # configuration, identity
 docker/         # Compose + Postgres
 docs/adr/       # decisões de arquitetura
 ```
@@ -41,6 +41,8 @@ sudo docker compose -f docker/docker-compose.yml --env-file .env down
 ```
 
 Health do configuration: `http://localhost:8081/health`
+
+Health do identity: `http://localhost:8082/health`
 
 API (leitura): `GET http://localhost:8081/v1/password-policy` (também `oidc-settings`, `rate-limits`, `branding`).
 

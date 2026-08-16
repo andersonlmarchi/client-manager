@@ -48,6 +48,29 @@ services:
     tmpfs:
       - /tmp
 
+  identity:
+    build:
+      context: ..
+      dockerfile: services/identity/Dockerfile
+    restart: unless-stopped
+    environment:
+      HTTP_ADDR: ":8080"
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?sslmode=disable&search_path=identity
+      SKIP_MIGRATE: "true"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "${IDENTITY_PORT:-8082}:8080"
+    networks:
+      - clientmanager
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+
 networks:
   clientmanager:
     driver: bridge
