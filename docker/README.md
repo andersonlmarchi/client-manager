@@ -43,3 +43,4 @@ sudo docker compose -f docker/docker-compose.yml --env-file .env config
 
 - O entrypoint [`bin/service-entrypoint.sh`](bin/service-entrypoint.sh) espera o Postgres e roda `/app/migrate up`.
 - O migrate do `configuration` cria o schema `configuration`, aplica tabelas ent e grava defaults das políticas.
+- O migrate do `identity` cria o schema `identity` e as tabelas de user/credential.

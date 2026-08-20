@@ -21,7 +21,7 @@ func main() {
 	}
 
 	mux := http.NewServeMux()
-	identityhttp.RegisterRoutes(mux)
+	identityhttp.NewServer().RegisterRoutes(mux)
 
 	server := &http.Server{
 		Addr:              addr,

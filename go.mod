@@ -5,6 +5,7 @@ go 1.25.0
 require (
 	entgo.io/ent v0.14.5
 	github.com/jackc/pgx/v5 v5.10.0
+	golang.org/x/crypto v0.31.0
 	modernc.org/sqlite v1.56.0
 )
 

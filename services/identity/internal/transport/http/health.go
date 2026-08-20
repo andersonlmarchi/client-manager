@@ -9,7 +9,13 @@ type healthResponse struct {
 	Status string `json:"status"`
 }
 
-func RegisterRoutes(mux *http.ServeMux) {
+type Server struct{}
+
+func NewServer() *Server {
+	return &Server{}
+}
+
+func (s *Server) RegisterRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET /health", HandleHealth)
 }
 

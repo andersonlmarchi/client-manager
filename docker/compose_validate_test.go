@@ -139,7 +139,6 @@ func TestComposeDefinesIdentityService(t *testing.T) {
 		"identity:",
 		"services/identity/Dockerfile",
 		"search_path=identity",
-		"SKIP_MIGRATE:",
 		"IDENTITY_PORT",
 	}
 	for _, want := range required {
@@ -165,6 +164,7 @@ func TestIdentityDockerfileExists(t *testing.T) {
 		"service-entrypoint.sh",
 		"USER appuser",
 		"/app/identity",
+		"/app/migrate",
 	} {
 		if !strings.Contains(content, want) {
 			t.Errorf("Dockerfile missing %q", want)

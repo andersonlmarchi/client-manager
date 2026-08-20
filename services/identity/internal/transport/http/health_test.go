@@ -13,7 +13,7 @@ func TestHandleHealth(t *testing.T) {
 	t.Parallel()
 
 	mux := http.NewServeMux()
-	identityhttp.RegisterRoutes(mux)
+	identityhttp.NewServer().RegisterRoutes(mux)
 
 	req := httptest.NewRequest(http.MethodGet, "/health", nil)
 	rec := httptest.NewRecorder()
@@ -39,7 +39,7 @@ func TestHandleHealthRejectsPost(t *testing.T) {
 	t.Parallel()
 
 	mux := http.NewServeMux()
-	identityhttp.RegisterRoutes(mux)
+	identityhttp.NewServer().RegisterRoutes(mux)
 
 	req := httptest.NewRequest(http.MethodPost, "/health", nil)
 	rec := httptest.NewRecorder()
