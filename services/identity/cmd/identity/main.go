@@ -6,10 +6,13 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
 
 	"github.com/andersonlmarchi/client-manager/packages/shared"
+	"github.com/andersonlmarchi/client-manager/services/identity/internal/application"
+	"github.com/andersonlmarchi/client-manager/services/identity/internal/infrastructure"
 	identityhttp "github.com/andersonlmarchi/client-manager/services/identity/internal/transport/http"
 )
 
@@ -20,8 +23,33 @@ func main() {
 		addr = ":8080"
 	}
 
+	databaseURL := os.Getenv("DATABASE_URL")
+	client, db, err := infrastructure.Open(databaseURL)
+	if err != nil {
+		logger.Error("database open failed", slog.String("error", err.Error()))
+		os.Exit(1)
+	}
+	defer client.Close()
+	defer db.Close()
+
+	ttlHours := 168
+	if v := os.Getenv("SESSION_TTL_HOURS"); v != "" {
+		n, err := strconv.Atoi(v)
+		if err != nil || n < 1 {
+			logger.Error("invalid SESSION_TTL_HOURS")
+			os.Exit(1)
+		}
+		ttlHours = n
+	}
+	cookieSecure := os.Getenv("COOKIE_SECURE") == "true" || os.Getenv("COOKIE_SECURE") == "1"
+
+	users := infrastructure.NewUserRepository(client)
+	sessions := infrastructure.NewSessionRepository(client)
+	auth := application.NewAuthService(users, sessions, time.Duration(ttlHours)*time.Hour)
+	api := identityhttp.NewServer(auth, cookieSecure)
+
 	mux := http.NewServeMux()
-	identityhttp.NewServer().RegisterRoutes(mux)
+	api.RegisterRoutes(mux)
 
 	server := &http.Server{
 		Addr:              addr,

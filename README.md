@@ -44,6 +44,8 @@ Health do configuration: `http://localhost:8081/health`
 
 Health do identity: `http://localhost:8082/health`
 
+Identity auth: `POST /v1/login`, `POST /v1/logout`, `GET /v1/me` em `:8082`.
+
 API (leitura): `GET http://localhost:8081/v1/password-policy` (também `oidc-settings`, `rate-limits`, `branding`).
 
 Escrita admin: `PUT` nos mesmos paths com header `X-Admin-Key` (valor de `ADMIN_API_KEY`).
